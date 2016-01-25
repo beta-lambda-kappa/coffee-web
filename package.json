@@ -1,0 +1,30 @@
+{
+  "name": "coffee-web",
+  "version": "1.0.0",
+  "description": "Web server for coffee sensor.",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/beta-lambda-kappa/coffee-web.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/beta-lambda-kappa/coffee-web/issues"
+  },
+  "homepage": "https://github.com/beta-lambda-kappa/coffee-web#readme",
+  "scripts": {
+    "start" : "nodemon --exec babel-node server.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.14.2",
+    "express": "^4.13.4"
+  },
+  "devDependencies": {
+    "babel-preset-es2015": "^6.3.13",
+    "morgan": "^1.6.1"
+  }
+}
