@@ -1,6 +1,8 @@
 'use strict';
 
+import fs from 'fs'
 import http from 'http';
+import path from 'path';
 import express from 'express';
 import bodyParser from 'body-parser';
 import logger from 'morgan';
@@ -14,7 +16,15 @@ app.use(logger('dev'));
 
 let PORT = process.env.PORT || 3000;
 
+app.use('/js', express.static(path.join(__dirname, 'dist')));
+
+app.use(express.static(path.join(__dirname, 'client')));
+
 app.use('/api', routes);
+
+app.get('/*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'client/index.html'));
+});
 
 app.get('*', (req, res) => {
     res.status(404).send({ message : 'Access here is forbidden' });
