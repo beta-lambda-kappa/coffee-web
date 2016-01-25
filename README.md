@@ -3,4 +3,5 @@
 3. `npm install -g nodemon`
 4. `npm install -g browserify`
 5. `npm install`
-6. `npm start`
+6. `npm run build`
+7. `npm start`
