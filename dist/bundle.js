@@ -36,7 +36,9 @@ var reducer = (0, _redux.combineReducers)(Object.assign({}, _reducers2.default, 
 // Sync dispatched route actions to the history
 var history = (0, _history.createHistory)();
 var reduxRouterMiddleware = (0, _reactRouterRedux.syncHistory)(history);
-var createStoreWithMiddleware = (0, _redux.applyMiddleware)(reduxRouterMiddleware)(_redux.createStore);
+var createStoreWithMiddleware = (0, _redux.compose)((0, _redux.applyMiddleware)(reduxRouterMiddleware), window.devToolsExtension ? window.devToolsExtension() : function (f) {
+  return f;
+})(_redux.createStore);
 
 var store = createStoreWithMiddleware(reducer);
 

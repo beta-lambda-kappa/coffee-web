@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore, combineReducers, applyMiddleware} from 'redux';
+import { createStore, combineReducers, applyMiddleware, compose} from 'redux';
 import { Provider } from 'react-redux';
 import { Router, Route } from 'react-router';
 import { createHistory } from 'history';
@@ -15,7 +15,10 @@ const reducer = combineReducers(Object.assign({}, reducers, {
 // Sync dispatched route actions to the history
 const history = createHistory();
 const reduxRouterMiddleware = syncHistory(history);
-const createStoreWithMiddleware = applyMiddleware(reduxRouterMiddleware)(createStore);
+const createStoreWithMiddleware = compose(
+  applyMiddleware(reduxRouterMiddleware),
+  window.devToolsExtension ? window.devToolsExtension() : f => f
+)(createStore);
 
 const store = createStoreWithMiddleware(reducer);
 
