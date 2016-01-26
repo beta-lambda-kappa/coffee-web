@@ -6,6 +6,7 @@ import path from 'path';
 import express from 'express';
 import bodyParser from 'body-parser';
 import logger from 'morgan';
+import browserify from 'browserify-middleware';
 import routes from './app/routes';
 
 let app = express();
@@ -16,7 +17,32 @@ app.use(logger('dev'));
 
 let PORT = process.env.PORT || 3000;
 
-app.use('/js', express.static(path.join(__dirname, 'dist')));
+let conf = {
+  common: {
+    bundle: 'common.js',
+    packages: [
+      'react',
+      'react-dom',
+      'react-router',
+      'redux',
+      'react-redux',
+      'react-router-redux',
+      'history'
+    ]
+  }
+}
+
+app.get('/js/' + conf.common.bundle, browserify(conf.common.packages, {
+  cache: true,
+  precompile: true
+}));
+
+app.use('/js', browserify('./client', {
+  external: conf.common.packages,
+  transform: [
+    ['babelify', {presets: ["es2015", "react", "stage-2"]}]
+  ]
+}));
 
 app.use(express.static(path.join(__dirname, 'client')));
 
